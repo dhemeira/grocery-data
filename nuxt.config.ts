@@ -6,5 +6,6 @@ export default defineNuxtConfig({
     dataValue: 'theme', // activate data-theme in <html> tag
     classSuffix: '',
   },
+  app: { head: { link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico?v2' }] } },
 });
 
