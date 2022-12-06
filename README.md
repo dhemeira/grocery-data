@@ -4,13 +4,7 @@
 
 An app that keeps track of shopping lists, prices, past purchases and more!
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Commit
-
-```bash
-npm run commit
-```
+[Made with Nuxt 3](https://nuxt.com/docs/getting-started/introduction)
 
 ## Setup
 
@@ -28,19 +22,35 @@ Start the development server on http://localhost:3000
 npm run dev
 ```
 
-## Production
-
-Build the application for production:
+## Commit
 
 ```bash
-npm run build
+npm run commit
 ```
 
-Locally preview production build:
+## Todo
 
-```bash
-npm run preview
-```
+- [ ] Create Kanban table
+- [ ] Create auth
+  - [ ] Make auth required to use app
+- [ ] Create full CRUD
+  - [x] create purchase
+  - [x] get purchases
+  - [x] get active purchase
+  - [x] update product price
+  - [x] get producttypes
+  - [x] create producttype
+  - [ ] update producttype (name)
+  - [ ] get all prices of producttype in ascending order
+  - [ ] create product
+  - [ ] update product
+  - [ ] delete purchase (soft)
+  - [ ] delete producttype (soft)
+  - [ ] when creating new finished purchase, update product relations from active purchases to finished for bought products
+- [ ] Create functioning UI
+- [ ] Apply design to UI
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Future plans
+
+- [ ] Extend to multiple users with their own purchases
 
