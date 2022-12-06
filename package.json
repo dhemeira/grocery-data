@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "commit": "cz"
+  },
+  "devDependencies": {
+    "@nuxtjs/color-mode": "^3.2.0",
+    "@nuxtjs/tailwindcss": "^6.1.3",
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "^3.3.0",
+    "daisyui": "^2.42.1",
+    "nuxt": "3.0.0",
+    "prisma": "^4.7.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@prisma/client": "^4.7.1"
+  }
+}
