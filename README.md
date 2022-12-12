@@ -31,26 +31,52 @@ npm run commit
 ## Todo
 
 - [ ] Create Kanban table
+
 - [ ] Create auth
+
   - [ ] Make auth required to use app
+    - [ ] (user, admin) addToList
+    - [ ] (admin) createProduct
+    - [ ] (admin) finishList
+    - [ ] (user, admin) getActivePurchase
+    - [ ] (user, admin) getProducts
+    - [ ] (admin) getPurchases
+    - [ ] (admin) updatePrice
+    - [ ] (admin) updateProductAmount
+    - [ ] (admin) updateProductName
+    - [ ] (admin) removeFromList
+    - [ ] (admin) getProductPrices
+    - [ ] (admin) deletePurchase
+    - [ ] (admin) deleteProduct
+    - [ ] (admin) getProductPrices
+    - [ ] (admin) getMostBoughtProduct
+    - [ ] (admin) getOnePurchase
+
 - [ ] Create full CRUD
-  - [x] create purchase
-  - [x] get purchases
-  - [x] get active purchase
-  - [x] update product price
-  - [x] get producttypes
-  - [x] create producttype
-  - [ ] update producttype (name)
-  - [ ] get all prices of producttype in ascending order
-  - [ ] create product
-  - [ ] update product
-  - [ ] delete purchase (soft)
-  - [ ] delete producttype (soft)
-  - [ ] when creating new finished purchase, update product relations from active purchases to finished for bought products
+
+  - [x] addToList
+  - [x] createProduct
+  - [x] finishList
+  - [x] getActivePurchase
+  - [x] getProducts
+  - [x] getPurchases
+  - [x] updatePrice
+  - [x] updateProductAmount
+  - [x] updateProductName
+  - [ ] removeFromList
+  - [ ] getProductPrices - get all prices of producttype in ascending order
+  - [ ] deletePurchase (soft ha kell)
+  - [ ] deleteProduct (soft ha kell)
+  - [ ] getProductPrices
+  - [ ] getMostBoughtProduct
+  - [ ] getOnePurchase
+
 - [ ] Create functioning UI
+
 - [ ] Apply design to UI
 
 ## Future plans
 
 - [ ] Extend to multiple users with their own purchases
+- [ ] Rewrite database and API to make it less of a mess
 
