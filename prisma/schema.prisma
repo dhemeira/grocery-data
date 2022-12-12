@@ -25,21 +25,11 @@ model Price {
   value Int
 }
 
-model Product {
-  id        Int      @id @default(autoincrement())
-  name String
-  productType    ProductType    @relation(fields: [productTypeId], references: [id])
-  productTypeId Int
-  amount Int @default(1)
-  price Int
-  purchases ProductsOfPurchases[]
-}
-
 model ProductType {
   id        Int      @id @default(autoincrement())
   name String @unique
   prices Price[]
-  product Product[]
+  purchases ProductTypesOfPurchases[]
 }
 
 model Purchase {
@@ -47,14 +37,15 @@ model Purchase {
   date DateTime?
   value Int?
   status String @default("finished")
-  products ProductsOfPurchases[]
+  products ProductTypesOfPurchases[]
 }
 
-model ProductsOfPurchases {
-  product       Product     @relation(fields: [productId], references: [id])
-  productId     Int // relation scalar field (used in the `@relation` attribute above)
+model ProductTypesOfPurchases {
+  product       ProductType     @relation(fields: [productTypeId], references: [id])
+  productTypeId     Int // relation scalar field (used in the `@relation` attribute above)
   purchase   Purchase @relation(fields: [purchaseId], references: [id])
   purchaseId Int // relation scalar field (used in the `@relation` attribute above)
+  amount Int @default(1)
 
-  @@id([productId, purchaseId])
+  @@id([productTypeId, purchaseId])
 }
