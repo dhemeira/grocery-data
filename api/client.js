@@ -57,7 +57,7 @@ export const addToList = async (event) => {
   const body = await readBody(event);
 
   const result = await prisma.purchase.update({
-    where: { id: body.purchase },
+    where: { id: 1 },
     data: {
       products: {
         create: [
@@ -239,17 +239,6 @@ export const getPurchases = async (event) => {
     })
   );
   return result;
-
-  // const purchases = await prisma.purchase.findMany({
-  //   where: { status: 'finished' },
-  //   orderBy: { date: 'asc' },
-  //   include: {
-  //     products: true,
-  //   },
-  // });
-  // return {
-  //   purchases,
-  // };
 };
 
 /**
@@ -287,4 +276,184 @@ export const getActivePurchase = async (event) => {
       price: prices[0].value,
     })),
   };
+};
+
+/**
+ * Removes a product from the shopping list
+ * @param id Id of product
+ */
+export const removeFromList = async (event) => {
+  const body = await readBody(event);
+
+  const result = await prisma.purchase.update({
+    where: {
+      id: 1,
+    },
+    data: {
+      products: {
+        delete: [{ productTypeId_purchaseId: { productTypeId: body.id, purchaseId: 1 } }],
+      },
+    },
+  });
+
+  return {
+    result,
+  };
+};
+
+/**
+ * Get the price history of a single product
+ * @param id Id of product
+ */
+export const getProductPrices = async (event) => {
+  const body = getQuery(event);
+
+  const product = await prisma.productType.findFirst({
+    where: { id: parseInt(body.id) },
+    include: {
+      prices: {
+        orderBy: { date: 'asc' },
+      },
+    },
+  });
+  return product;
+};
+
+/**
+ * Get products ordered by number of times bought
+ */
+export const getProductsByCount = async (event) => {
+  const purchases = await prisma.productTypesOfPurchases.groupBy({
+    by: ['productTypeId'],
+    where: { purchaseId: { not: { equals: 1 } } },
+    _count: { productTypeId: true },
+    orderBy: { _count: { productTypeId: 'desc' } },
+  });
+
+  let result = await Promise.all(
+    purchases.map(async ({ _count, ...purchases }) => ({
+      ...(await prisma.productType.findFirst({
+        where: { id: purchases.productTypeId },
+      })),
+
+      count: _count.productTypeId,
+    }))
+  );
+  return result;
+};
+
+/**
+ * Get a single purchase
+ * @param id Id of puchase
+ */
+export const getOnePurchase = async (event) => {
+  const body = getQuery(event);
+
+  const purchase = await prisma.purchase.findFirst({
+    where: { status: 'finished', id: parseInt(body.id) },
+    include: {
+      products: {
+        include: {
+          product: {
+            include: {
+              prices: {
+                select: {
+                  value: true,
+                },
+                orderBy: { date: 'desc' },
+                take: 1,
+              },
+              purchases: {
+                select: {
+                  amount: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+  return {
+    ...purchase,
+    products: purchase.products.map((p) => ({
+      id: p.product.id,
+      name: p.product.name,
+      amount: p.amount,
+      price: p.product.prices[0].value,
+    })),
+  };
+};
+
+/**
+ * Deletes a purchase
+ * @param id Id of puchase
+ */
+export const deletePurchase = async (event) => {
+  const body = await readBody(event);
+
+  await prisma.purchase.update({
+    where: {
+      id: body.id,
+    },
+    data: {
+      products: {
+        deleteMany: {},
+      },
+    },
+  });
+
+  const result = await prisma.purchase.delete({
+    where: {
+      id: body.id,
+    },
+  });
+
+  return {
+    result,
+  };
+};
+
+/**
+ * Deletes a product if its haven't been purchased yet
+ * @param id Id of product
+ */
+export const deleteProduct = async (event) => {
+  const body = await readBody(event);
+
+  const product = await prisma.productType.findFirst({
+    where: {
+      id: body.id,
+    },
+    include: { purchases: true },
+  });
+
+  if (product.purchases == '') {
+    await prisma.productType.update({
+      where: {
+        id: body.id,
+      },
+      data: {
+        prices: {
+          deleteMany: {},
+        },
+      },
+    });
+
+    const result = await prisma.productType.delete({
+      where: {
+        id: body.id,
+      },
+    });
+
+    return {
+      result,
+    };
+  }
+  throw createError({
+    statusCode: 400,
+    message: 'Product cannot be deleted',
+    statusMessage: 'Cannot be deleted',
+    stack: '',
+  });
 };
