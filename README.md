@@ -52,31 +52,19 @@ npm run commit
     - [ ] (admin) getMostBoughtProduct
     - [ ] (admin) getOnePurchase
 
-- [ ] Create full CRUD
+- [x] Create full CRUD
 
-  - [x] addToList
-  - [x] createProduct
-  - [x] finishList
-  - [x] getActivePurchase
-  - [x] getProducts
-  - [x] getPurchases
-  - [x] updatePrice
-  - [x] updateProductAmount
-  - [x] updateProductName
-  - [ ] removeFromList
-  - [ ] getProductPrices - get all prices of producttype in ascending order
-  - [ ] deletePurchase (soft ha kell)
-  - [ ] deleteProduct (soft ha kell)
-  - [ ] getProductPrices
-  - [ ] getMostBoughtProduct
-  - [ ] getOnePurchase
+- [ ] return proper error messages
 
 - [ ] Create functioning UI
 
 - [ ] Apply design to UI
 
+- [ ] Write tests
+
 ## Future plans
 
 - [ ] Extend to multiple users with their own purchases
 - [ ] Rewrite database and API to make it less of a mess
+- [ ] Migrate to typescript
 
